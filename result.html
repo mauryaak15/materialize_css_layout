@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Companies Data View</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    </head>
+    <style>
+    
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            background-color: #ee6e73;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+        /* changing default of materialize css */
+        nav {
+            background-color: #fff;
+        }
+        nav a {
+            color: #000!important;
+        } 
+        nav .brand-logo {
+            padding-left: 15px;
+        }
+        .page-footer {
+            background-color: #fff;
+            padding: 0px!important;
+        }
+        .page-footer .container, .page-footer .container a {
+            color: #000!important;
+        }
+        .page-footer .footer-copyright {
+            background-color: #fff;
+        }
+
+        input:not([type]):focus:not([readonly]), input[type=text]:not(.browser-default):focus:not([readonly]), input[type=password]:not(.browser-default):focus:not([readonly]), input[type=email]:not(.browser-default):focus:not([readonly]), input[type=url]:not(.browser-default):focus:not([readonly]), input[type=time]:not(.browser-default):focus:not([readonly]), input[type=date]:not(.browser-default):focus:not([readonly]), input[type=datetime]:not(.browser-default):focus:not([readonly]), input[type=datetime-local]:not(.browser-default):focus:not([readonly]), input[type=tel]:not(.browser-default):focus:not([readonly]), input[type=number]:not(.browser-default):focus:not([readonly]), input[type=search]:not(.browser-default):focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+            border-bottom: 1px solid #fff!important;
+            -webkit-box-shadow: 0 1px 0 0 #fff!important;
+            box-shadow: 0 1px 0 0 #fff!important;
+        }
+
+        input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea{
+            border-bottom: 1px solid #fff!important;
+        }
+
+        .input-field label {
+            color: #fff!important;
+        }
+
+        .input-field i{
+            color: #fff!important;
+        }
+
+        .input-field .prefix.active{
+            color: #fff!important;
+        }
+
+        input{
+            color: #fff!important;
+        }
+
+        input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+            color: #fff!important;
+        }
+        input[type="submit"].btn {
+            background-color: #fff!important;
+            color: #000!important;
+        }
+        #tx_location {
+            margin-bottom: 8px!important;
+        }
+        #tx_error {
+            margin: 0px 0 8px 0!important;
+            color: #fff;
+        }
+        table thead tr th {
+            color: #fff;
+        }
+        table tbody tr:nth-child(even) td {
+            color: #fff;
+        }
+        .empty_result_message {
+            color: #fff;
+        }
+        .home {
+            background-color: #fff!important;
+            color: #000;
+        }
+        /* Changing defaults end */
+
+        /*Helper class*/
+        .hidden {
+            display: none;
+        }
+
+    </style>
+    <body>
+        <main>
+            <nav>
+                <div class="nav-wrapper">
+                    <a href="#!" class="brand-logo">ITCompanyFinder</a>
+                    <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="#">Noida</a></li>
+                        <li><a href="#">Delhi</a></li>
+                        <li><a href="#">Kolkata</a></li>
+                        <li><a href="#">Banglore</a></li>
+                    </ul>
+                    <ul class="side-nav" id="mobile-demo">
+                        <li><a href="#">Noida</a></li>
+                        <li><a href="#">Delhi</a></li>
+                        <li><a href="#">Kolkata</a></li>
+                        <li><a href="#">Banglore</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="container">
+                <div class="row">
+                    <form action="SearchCompany/DisplayCompanies" method="post" onsubmit="return validate()">
+                        <div class="input-field col m6 offset-m3">
+                            <i class="material-icons prefix">search</i>
+                            <input id="tx_location" type="text">
+                            <label for="tx_location">Enter location</label>
+                            <p class="hidden center-align" id="tx_error">Enter valid location</p>
+                        </div>
+                </div>
+                <div class="row">
+                    <div class="col m12 center-align">
+                        <input id="bt_search" class="btn" type="submit" value="Search">
+                    </div>
+                </div>
+                </form>
+                <div class="row">
+                    <div class="col m12">
+                        <table class="center-align striped responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Item Name</th>
+                                    <th>Item Price</th>
+                                </tr>
+                            </thead>
+                        
+                            <tbody>
+                                <tr>
+                                <td>Alvin</td>
+                                <td>Eclair</td>
+                                <td>$0.87</td>
+                                </tr>
+                                <tr>
+                                <td>Alan</td>
+                                <td>Jellybean</td>
+                                <td>$3.76</td>
+                                </tr>
+                                <tr>
+                                <td>Jonathan</td>
+                                <td>Lollipop</td>
+                                <td>$7.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col m12 center-align">
+                        <h3 class="empty_result_message">No Such Location Exists</h3>
+                    </div>
+                </div>
+                <div class="row center-align">
+                    <div class="col m6">
+                        <form action="DisplayCompanies" method="post">
+                            <input id="hitcountfromui" type="hidden" name="hitcountfromui" value=@ViewBag.lasthitcount />
+                            <input id="token" type="hidden" name="token" value=@ViewBag.NextPageToken /> 
+                            <input id="bt_next" class="btn" type="submit" value="Next" />
+                        </form>     
+                    </div>
+                    <div class="col m6">
+                        <a href="/" class="btn home">Home</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <div class="footer-copyright">
+                <div class="container">
+                    &copy; 2018 Copyright IT Company Finder
+                    <a class="grey-text text-lighten-4 right" href="#">More Links</a>
+                </div>
+            </div>
+        </footer>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+        <script>
+            // For changing background color
+            function changeColor(selector, colors, time) {
+                var curCol =0,
+                    timer = setInterval(function () {
+                        if (curCol === colors.length) curCol = 0;
+                        $(selector).animate({
+                        backgroundColor: colors[curCol]
+                        }, 1000);
+                        curCol++;
+                    }, time);
+            }
+            // For form validation
+            function validate(e) {
+
+                var location_element = document.querySelector('#tx_location');
+                var location_error_element = document.querySelector('#tx_error');
+                var location_regex = /^(?![0-9]*$)[a-zA-Z0-9-, ]+$/;
+                if (!location_regex.test(location_element.value)) {
+                    location_error_element.classList.remove("hidden");
+                    console.log('galat');
+                    return false;
+                } else {
+                    location_error_element.classList.add("hidden");
+                    console.log('sahi');
+                    return true;
+                }
+
+            }
+            $(window).on('load',function () {
+                changeColor("body", ["rgba(0,128,0,0.6)", "rgba(128,0,128, 0.6)", "rgba(0,0,128,0.6)"], 3000);
+            });
+            
+            //navbar collapse js
+            $( document ).ready(function(){
+                $(".button-collapse").sideNav();
+            }); 
+        </script>
+    </body>
+</html>
